@@ -13,6 +13,7 @@
     "react"
   ],
   "plugins": [
+    "babel-plugin-transform-runtime",
     "syntax-dynamic-import",
     "transform-object-rest-spread",
     [
