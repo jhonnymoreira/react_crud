@@ -9,12 +9,16 @@
     "@rails/webpacker": "3.5",
     "babel-preset-env": "^1.7.0",
     "babel-preset-react": "^6.24.1",
+    "final-form": "^4.10.0",
+    "final-form-arrays": "^1.1.0",
     "lodash.forin": "^4.4.0",
     "lodash.get": "^4.4.2",
     "lodash.set": "^4.3.2",
     "prop-types": "^15.6.2",
     "react": "^16.5.2",
-    "react-dom": "^16.5.2"
+    "react-dom": "^16.5.2",
+    "react-final-form": "^3.6.7",
+    "react-final-form-arrays": "^1.1.0"
   },
   "devDependencies": {
     "jest": "^23.6.0",
