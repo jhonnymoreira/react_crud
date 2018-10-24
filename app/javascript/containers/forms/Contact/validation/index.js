@@ -1,5 +1,6 @@
 import get from 'lodash.get'
 import set from 'lodash.set'
+import required from '../../../../validations/required'
 
 const validation = values => {
   // eslint-disable-next-line prefer-const
@@ -7,23 +8,17 @@ const validation = values => {
 
   const toValidate = {
     fields: ['contact'],
-    contact: {
-      properties: ['firstName', 'lastName'],
-      firstName: 'Required',
-      lastName: 'Required',
-    },
+    contact: ['firstName', 'lastName'],
   }
 
   toValidate.fields.forEach(fieldName => {
-    const field = get(toValidate, fieldName)
+    const properties = get(toValidate, fieldName)
 
-    field.properties.forEach(propertyName => {
-      const path = `${fieldName}.${propertyName}`
+    properties.forEach(propertyName => {
+      const path = [fieldName, propertyName]
       const propertyValue = get(values, path)
 
-      if (!propertyValue) {
-        set(errors, path, 'Required')
-      }
+      set(errors, path, required(propertyValue))
     })
   })
 
