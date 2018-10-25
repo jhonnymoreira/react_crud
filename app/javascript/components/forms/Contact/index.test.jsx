@@ -12,23 +12,18 @@ const getFieldElementsByName = (wrapper, name) =>
 const getMatchingErrorElements = (wrapper, errors = {}) =>
   wrapper.find({ error: true, ...errors })
 
-describe('ContactForm', () => {
+describe('ContactForm component', () => {
   describe('when validating', () => {
-    it('renders the validation message and triggers error on each specified field', () => {
-      const validation = () => ({
+    it('renders the validation message and triggers error on each invalid field', () => {
+      const validationErrors = {
         contact: {
           firstName: 'Invalid first name!',
           lastName: 'Invalid last name!',
         },
-      })
+      }
 
       const wrapper = mount(
-        <ContactForm
-          onSubmit={async () => {
-            noop()
-          }}
-          validate={validation}
-        />
+        <ContactForm onSubmit={noop} validate={() => validationErrors} />
       )
 
       triggerSubmit(wrapper)
@@ -44,13 +39,13 @@ describe('ContactForm', () => {
 
       expect(
         getMatchingErrorElements(firstNameElement, {
-          helperText: 'Invalid first name!',
+          helperText: validationErrors.contact.firstName,
         })
       ).toHaveLength(1)
 
       expect(
         getMatchingErrorElements(lastNameElement, {
-          helperText: 'Invalid last name!',
+          helperText: validationErrors.contact.lastName,
         })
       ).toHaveLength(1)
     })
