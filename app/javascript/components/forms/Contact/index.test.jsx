@@ -6,12 +6,10 @@ const triggerSubmit = wrapper => {
   wrapper.find('form').simulate('submit')
 }
 
-const getFieldElementsByName = (wrapper, fieldName) =>
-  wrapper.findWhere(
-    field => field.name() === 'Field' && field.prop('name') === fieldName
-  )
+const getFieldElementsByName = (wrapper, name) =>
+  wrapper.find(`Field[name="${name}"]`)
 
-const findMatchingErrorElements = (wrapper, errors = {}) =>
+const getMatchingErrorElements = (wrapper, errors = {}) =>
   wrapper.find({ error: true, ...errors })
 
 describe('ContactForm', () => {
@@ -45,13 +43,13 @@ describe('ContactForm', () => {
       )
 
       expect(
-        findMatchingErrorElements(firstNameElement, {
+        getMatchingErrorElements(firstNameElement, {
           helperText: 'Invalid first name!',
         })
       ).toHaveLength(1)
 
       expect(
-        findMatchingErrorElements(lastNameElement, {
+        getMatchingErrorElements(lastNameElement, {
           helperText: 'Invalid last name!',
         })
       ).toHaveLength(1)
