@@ -13,7 +13,7 @@ const getMatchingErrorElements = (wrapper, errors = {}) =>
   wrapper.find({ error: true, ...errors })
 
 describe('ContactForm component', () => {
-  describe('when validating', () => {
+  describe('when validation fails', () => {
     it('renders the validation message and triggers error on each invalid field', () => {
       const validationErrors = {
         contact: {
@@ -46,6 +46,33 @@ describe('ContactForm component', () => {
       expect(
         getMatchingErrorElements(lastNameElement, {
           helperText: validationErrors.contact.lastName,
+        })
+      ).toHaveLength(1)
+    })
+  })
+
+  describe('when submit fails', () => {
+    it('renders the error message and triggers error on invalid field', () => {
+      const submitErrors = {
+        contact: {
+          firstName: 'Name not available.',
+        },
+      }
+
+      const wrapper = mount(
+        <ContactForm onSubmit={() => submitErrors} validate={noop} />
+      )
+
+      triggerSubmit(wrapper)
+
+      const firstNameElement = getFieldElementsByName(
+        wrapper,
+        'contact.firstName'
+      )
+
+      expect(
+        getMatchingErrorElements(firstNameElement, {
+          helperText: submitErrors.contact.firstName,
         })
       ).toHaveLength(1)
     })
